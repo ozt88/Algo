@@ -20,94 +20,100 @@ using i64 = long long int;
 using ii = pair<int, int>;
 using ii64 = pair<i64, i64>;
 
+vector<int> fixedSwitchKey = { 11, 8, 13, 10, 6, 7, 5, 1, 0, 3 };
 
-bool Check(int x, int y, const vector<pair<int, int>>& candidate, const vector<vector<char>>& board)
+vector<vector<int>> fixedSwitches =
 {
-	for (auto& checkDir : candidate)
+	{ 3, 7, 9, 11 },  // only 11
+	{ 6, 7, 8, 10, 12 }, //only 8, 12
+	{ 3, 4, 5, 9, 13 }, // only 13
+	{4, 10, 14, 15}, //only 10
+	{ 0, 4, 5, 6, 7 }, //only 6
+	{ 4, 5, 7, 14, 15 }, //only  7
+	{ 1, 2, 3, 4, 5 }, //only 5
+	{0, 1, 2}, //only 1
+	{ 0, 2, 14, 15 }, // only 0
+	{ 3, 14, 15 }, // only 3
+};
+
+int SolveLikeSudoku(vector<int>& input)
+{
+	vector<int> clocks;
+	for (auto in : input)
+		clocks.push_back((in / 3) % 4);
+
+	if (input[8] != input[12])
+		return -1;
+	
+	int ret = 0;
+	for (int i = 0; i < fixedSwitchKey.size(); ++i)
 	{
-		int checkX = x + checkDir.first;
-		int checkY = y + checkDir.second;
-
-		if(checkX >= board.size() || checkY >= board[checkX].size() || board[checkX][checkY] != '.')
-			return false;
-	}
-
-	return true;
-}
-
-void Mark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
-{
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '#';
-}
-
-void Unmark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
-{
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '.';
-}
-
-bool CheckWholeBoardComplete(const vector<vector<char>>& board, const int H, const int W)
-{
-	for(int h = 0; h < H; ++h)
-	{
-		for (int w = 0; w < W; ++w)
+		int count = (4 - clocks[fixedSwitchKey[i]]) % 4;
+		ret += count;
+		for (int idx : fixedSwitches[i])
 		{
-			if(board[w][h] == '.')
-				return false;
-		}
-	}
-	return true;
-}
-
-int Iter(int idx, vector<vector<char>>& board, const int H, const int W)
-{
-	if(CheckWholeBoardComplete(board, H, W))
-		return 1;
-
-	if (idx >= H * W)
-		return 0;
-
-	static const vector<vector<pair<int, int>>> candidates = { {{0, 0}, {0, 1}, {1, 0}}, {{0, 0}, {1, 0}, {1, 1}},  {{0, 0}, {0, 1}, {1, 1}}, {{0, 1}, {1, 0}, {1, 1}}, {}};
-	int x = idx % W, y = idx / W;
-	int result = 0;
-	for (auto& candidate : candidates)
-	{
-		if (Check(x, y, candidate, board))
-		{
-			Mark(x, y, candidate, board);
-			if(board[x][y] == '#')
-				result += Iter(idx + 1, board, H, W);
-			Unmark(x, y, candidate, board);
+			clocks[idx] = (clocks[idx] + count) % 4;
 		}
 	}
 
-	return result;
+	for (int c : clocks)
+	{
+		if (c % 4)
+			return -1;
+	}
+
+	return ret;
 }
 
-int Solve(vector<vector<char>>& board, const int H, const int W)
+
+void TurnSwitch(vector<int>& clock, int index, int count)
 {
-	return Iter(0, board, H, W);
+	for (auto idx : fixedSwitches[index])
+		clock[idx] = (clock[idx] + count) % 4;
+}
+
+//10 switch & max 4 case per switch = 4^10 = 1048576 case
+int SolveBrutalIter(vector<int>& clock, int switchIndex)
+{
+	if (switchIndex >= 10)
+		return all_of(clock.begin(), clock.end(), [](int x) { return x == 0; }) ? 0 : -1;
+
+	int ret = 0;
+	for (int count = 0; count < 4; ++count)
+	{
+		TurnSwitch(clock, switchIndex, count);
+		ret = SolveBrutalIter(clock, switchIndex + 1);
+		if (ret >= 0)
+			return ret + count;
+
+		TurnSwitch(clock, switchIndex, 4 - count);
+	}
+	return -1;
+}
+
+
+int SolveBrutal(vector<int>& input)
+{
+	vector<int> clocks;
+	for (auto in : input)
+		clocks.push_back((in / 3) % 4);
+
+	return SolveBrutalIter(clocks, 0);
 }
 
 int main()
 {
 	int C;
 	cin >> C;
-	for (int i = 0; i < C; ++i)
+
+	for (int c = 0; c < C; ++c)
 	{
-		int H, W;
-		cin >> H >> W;
-		vector<vector<char>> board(W, vector<char>(H));
-		for (int h = 0; h < H; ++h)
+		vector<int> input(16, 0);
+		for (auto& i : input)
 		{
-			for (int w = 0; w < W; ++w)
-			{
-				cin >> board[w][h];
-			}
+			cin >> i;
 		}
-		int result = Solve(board, H, W);
-		cout <<  result << endl;
+		cout << SolveBrutal(input) << endl;
 	}
 
 	return 0;
