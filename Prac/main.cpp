@@ -52,6 +52,8 @@ struct QuadNode
 	}
 };
 
+//it's bad to use non-const reference in recursive function.
+//cuz you can't find the original stack status.
 QuadNode* MakeQuad(string& input)
 {
 	if (input.empty())
@@ -59,7 +61,6 @@ QuadNode* MakeQuad(string& input)
 
 	auto q = new QuadNode();
 	q->content = input[0];
-	//iterator is better choice
 	input = input.substr(1, input.length());
 
 	if (q->content == 'x')
@@ -76,7 +77,8 @@ QuadNode* MakeQuad(string& input)
 	return q;
 }
 
-//TOO MUCH OBJECT
+//too much object, slow & complex
+//make it simple!
 string Solve(string input)
 {
 	auto q = MakeQuad(input);
@@ -86,25 +88,29 @@ string Solve(string input)
 
 
 //so simple bitch
-string BookIter(string::iterator& it)
+string BookIter(string input, int offset)
 {
-	string ret = string(1, *it);
-	++it;
-	if (ret[0] != 'x')
-		return ret;
-	
-	auto c0 = BookIter(it);
-	auto c1 = BookIter(it);
-	auto c2 = BookIter(it);
-	auto c3 = BookIter(it);
-	ret += (c2 + c3 + c0 + c1);
+	if (input.length() <= offset)
+		return "";
 
-	return ret;
+	char head = input[offset++];
+	if (head != 'x')
+		return string(1, head);
+	
+	auto c0 = BookIter(input, offset);
+	offset += c0.length();
+	auto c1 = BookIter(input, offset);
+	offset += c1.length();
+	auto c2 = BookIter(input, offset);
+	offset += c2.length();
+	auto c3 = BookIter(input, offset);
+
+	return head + c2 + c3 + c0 + c1;
 }
 
 string BookSolve(string input)
 {
-	return BookIter(input.begin());
+	return BookIter(input, 0);
 }
 
 
