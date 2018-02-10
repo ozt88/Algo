@@ -59,6 +59,7 @@ QuadNode* MakeQuad(string& input)
 
 	auto q = new QuadNode();
 	q->content = input[0];
+	//iterator is better choice
 	input = input.substr(1, input.length());
 
 	if (q->content == 'x')
@@ -75,12 +76,37 @@ QuadNode* MakeQuad(string& input)
 	return q;
 }
 
+//TOO MUCH OBJECT
 string Solve(string input)
 {
 	auto q = MakeQuad(input);
 	q->Reverse();
 	return q->ToString();
 }
+
+
+//so simple bitch
+string BookIter(string::iterator& it)
+{
+	string ret = string(1, *it);
+	++it;
+	if (ret[0] != 'x')
+		return ret;
+	
+	auto c0 = BookIter(it);
+	auto c1 = BookIter(it);
+	auto c2 = BookIter(it);
+	auto c3 = BookIter(it);
+	ret += (c2 + c3 + c0 + c1);
+
+	return ret;
+}
+
+string BookSolve(string input)
+{
+	return BookIter(input.begin());
+}
+
 
 int main()
 {
@@ -90,7 +116,7 @@ int main()
 	for (int c = 0; c < C; ++c)
 	{
 		cin >> input;
-		cout << Solve(input) << endl;
+		cout << BookSolve(input) << endl;
 	}
 
 	return 0;
