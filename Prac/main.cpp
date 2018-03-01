@@ -21,73 +21,12 @@ using ii = pair<int, int>;
 using ii64 = pair<i64, i64>;
 
 
-bool Check(int x, int y, const vector<pair<int, int>>& candidate, const vector<vector<char>>& board)
+int cache[101][101];
+int input[101][101];
+
+bool IsValidGame(int x, int y)
 {
-	for (auto& checkDir : candidate)
-	{
-		int checkX = x + checkDir.first;
-		int checkY = y + checkDir.second;
 
-		if(checkX >= board.size() || checkY >= board[checkX].size() || board[checkX][checkY] != '.')
-			return false;
-	}
-
-	return true;
-}
-
-void Mark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
-{
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '#';
-}
-
-void Unmark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
-{
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '.';
-}
-
-bool CheckWholeBoardComplete(const vector<vector<char>>& board, const int H, const int W)
-{
-	for(int h = 0; h < H; ++h)
-	{
-		for (int w = 0; w < W; ++w)
-		{
-			if(board[w][h] == '.')
-				return false;
-		}
-	}
-	return true;
-}
-
-int Iter(int idx, vector<vector<char>>& board, const int H, const int W)
-{
-	if(CheckWholeBoardComplete(board, H, W))
-		return 1;
-
-	if (idx >= H * W)
-		return 0;
-
-	static const vector<vector<pair<int, int>>> candidates = { {{0, 0}, {0, 1}, {1, 0}}, {{0, 0}, {1, 0}, {1, 1}},  {{0, 0}, {0, 1}, {1, 1}}, {{0, 1}, {1, 0}, {1, 1}}, {}};
-	int x = idx % W, y = idx / W;
-	int result = 0;
-	for (auto& candidate : candidates)
-	{
-		if (Check(x, y, candidate, board))
-		{
-			Mark(x, y, candidate, board);
-			if(board[x][y] == '#')
-				result += Iter(idx + 1, board, H, W);
-			Unmark(x, y, candidate, board);
-		}
-	}
-
-	return result;
-}
-
-int Solve(vector<vector<char>>& board, const int H, const int W)
-{
-	return Iter(0, board, H, W);
 }
 
 int main()
@@ -96,19 +35,16 @@ int main()
 	cin >> C;
 	for (int i = 0; i < C; ++i)
 	{
-		int H, W;
-		cin >> H >> W;
-		vector<vector<char>> board(W, vector<char>(H));
-		for (int h = 0; h < H; ++h)
-		{
-			for (int w = 0; w < W; ++w)
-			{
-				cin >> board[w][h];
-			}
-		}
-		int result = Solve(board, H, W);
-		cout <<  result << endl;
-	}
+		memset(input, 0, 101 * 101);
+		memset(cache, 0, 101 * 101);
+		int n;
+		cin >> n;
+		for (int y = 0; y < n; ++y)
+			for (int x = 0; x < n; ++x)
+				cin >> input[x][y];
 
+		cout << IsValidGame(0, 0) ? "YES" : "NO";
+	}
+	
 	return 0;
 }
