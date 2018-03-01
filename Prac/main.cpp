@@ -20,74 +20,43 @@ using i64 = long long int;
 using ii = pair<int, int>;
 using ii64 = pair<i64, i64>;
 
-
-bool Check(int x, int y, const vector<pair<int, int>>& candidate, const vector<vector<char>>& board)
+int FindConnectedRectSize(int left, int right, int center, const vector<int>& fences)
 {
-	for (auto& checkDir : candidate)
+	int leftCursor = center;
+	int rightCursor = center + 1;
+	int minHeight = min(fences[leftCursor], fences[rightCursor]);
+	int maxSize = 0;
+
+	do
 	{
-		int checkX = x + checkDir.first;
-		int checkY = y + checkDir.second;
+		while (leftCursor > left && fences[leftCursor - 1] >= minHeight)
+			leftCursor--;
 
-		if(checkX >= board.size() || checkY >= board[checkX].size() || board[checkX][checkY] != '.')
-			return false;
-	}
+		while (rightCursor < right && fences[rightCursor + 1] >= minHeight)
+			rightCursor++;
 
-	return true;
+		int newSize = minHeight * (rightCursor - leftCursor + 1);
+		maxSize = max(maxSize, newSize);
+
+		int leftHeight = leftCursor > left ? fences[leftCursor - 1] : 0;
+		int rightHeight = rightCursor < right ? fences[rightCursor + 1] : 0;
+		minHeight = max(leftHeight, rightHeight);
+
+	} while (leftCursor > left || rightCursor < right);
+
+	return maxSize;
 }
 
-void Mark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
+int FindBiggestRectSize(int left, int right, const vector<int>& fences)
 {
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '#';
-}
+	if (left == right)
+		return fences[left];
 
-void Unmark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
-{
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '.';
-}
-
-bool CheckWholeBoardComplete(const vector<vector<char>>& board, const int H, const int W)
-{
-	for(int h = 0; h < H; ++h)
-	{
-		for (int w = 0; w < W; ++w)
-		{
-			if(board[w][h] == '.')
-				return false;
-		}
-	}
-	return true;
-}
-
-int Iter(int idx, vector<vector<char>>& board, const int H, const int W)
-{
-	if(CheckWholeBoardComplete(board, H, W))
-		return 1;
-
-	if (idx >= H * W)
-		return 0;
-
-	static const vector<vector<pair<int, int>>> candidates = { {{0, 0}, {0, 1}, {1, 0}}, {{0, 0}, {1, 0}, {1, 1}},  {{0, 0}, {0, 1}, {1, 1}}, {{0, 1}, {1, 0}, {1, 1}}, {}};
-	int x = idx % W, y = idx / W;
-	int result = 0;
-	for (auto& candidate : candidates)
-	{
-		if (Check(x, y, candidate, board))
-		{
-			Mark(x, y, candidate, board);
-			if(board[x][y] == '#')
-				result += Iter(idx + 1, board, H, W);
-			Unmark(x, y, candidate, board);
-		}
-	}
-
-	return result;
-}
-
-int Solve(vector<vector<char>>& board, const int H, const int W)
-{
-	return Iter(0, board, H, W);
+	int center = left + ((right - left) / 2);
+	int leftBiggest = FindBiggestRectSize(left, center, fences);
+	int rightBiggest = FindBiggestRectSize(center + 1, right, fences);
+	int connectedBiggest = FindConnectedRectSize(left, right, center, fences);
+	return max(max(leftBiggest, rightBiggest), connectedBiggest);
 }
 
 int main()
@@ -96,18 +65,14 @@ int main()
 	cin >> C;
 	for (int i = 0; i < C; ++i)
 	{
-		int H, W;
-		cin >> H >> W;
-		vector<vector<char>> board(W, vector<char>(H));
-		for (int h = 0; h < H; ++h)
+		int N;
+		cin >> N;
+		vector<int> fences(N);
+		for (auto& fence : fences)
 		{
-			for (int w = 0; w < W; ++w)
-			{
-				cin >> board[w][h];
-			}
+			cin >> fence;
 		}
-		int result = Solve(board, H, W);
-		cout <<  result << endl;
+		cout << FindBiggestRectSize(0, fences.size() - 1, fences) << endl;
 	}
 
 	return 0;
