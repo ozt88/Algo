@@ -20,35 +20,58 @@ using i64 = long long int;
 using ii = pair<int, int>;
 using ii64 = pair<i64, i64>;
 
-const int MAX_NUM = 10000001;
-int cache[MAX_NUM] = { 0, };
+int cache[101][101];
+string wildCard, fileName;
 
-int GetMinCalcCount(int num)
+bool checkWildCard(int wildCardIdx, int fileNameIdx)
 {
-	if (num == 1)
-		return 0;
+	if (wildCardIdx == wildCard.length() && fileNameIdx == fileName.length())
+		return true;
 
-	int ret = cache[num];
-	if (ret == 0)
+	if (wildCardIdx > wildCard.length() || fileNameIdx > fileName.length())
+		return false;
+
+	int ret = cache[wildCardIdx][fileNameIdx];
+	if (ret != -1)
+		return ret;
+
+	ret = false;
+
+	if (wildCardIdx < wildCard.length() && fileNameIdx < fileName.length() &&
+		(wildCard[wildCardIdx] == '?' || wildCard[wildCardIdx] == fileName[fileNameIdx]))
 	{
-		int minValue = GetMinCalcCount(num - 1);
-
-		if (num % 3 == 0)
-			minValue = min(minValue, GetMinCalcCount(num / 3));
-
-		if (num % 2 == 0)
-			minValue = min(minValue, GetMinCalcCount(num / 2));
-
-		ret = minValue + 1;
-		cache[num] = ret;
+		ret = checkWildCard(wildCardIdx + 1, fileNameIdx + 1);
 	}
+	else if (wildCard[wildCardIdx] == '*')
+	{
+		ret = checkWildCard(wildCardIdx + 1, fileNameIdx) || checkWildCard(wildCardIdx, fileNameIdx + 1);
+	}
+
+	cache[wildCardIdx][fileNameIdx] = ret;
 	return ret;
 }
 
 int main()
 {
-	int X;
-	cin >> X;
-	cout << GetMinCalcCount(X);
+	int C;
+	cin >> C;
+	for (int i = 0; i < C; ++i)
+	{
+		int N;
+		vector<string> rets;
+		cin >> wildCard >> N;
+		for (int j = 0; j < N; ++j)
+		{
+			memset(cache, -1, sizeof(cache));
+			cin >> fileName;
+			if (checkWildCard(0, 0))
+				rets.push_back(fileName);
+		}
+
+		sort(rets.begin(), rets.end());
+		for (auto ret : rets)
+			cout << ret << endl;
+	}
+
 	return 0;
 }
