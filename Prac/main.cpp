@@ -24,7 +24,8 @@ int N;
 int list[500];
 int cache[500];
 
-int GetLongestSequence(int index)
+// n^2 using DP
+int Lis(int index)
 {
 	if (index == N)
 		return 0;
@@ -42,6 +43,22 @@ int GetLongestSequence(int index)
 	return ret;
 }
 
+// n log n using lower_bound(binary search)
+int LisLowerBound(const vector<int> list)
+{
+	if (list.empty())
+		return 0;
+
+	vector<int> minValuePerLength;
+	for (int num : list)
+	{
+		if (minValuePerLength.empty() || minValuePerLength.back() < num)
+			minValuePerLength.push_back(num);
+		else
+			*lower_bound(minValuePerLength.begin(), minValuePerLength.end(), num) = num;
+	}
+	return minValuePerLength.size();
+}
 
 int main()
 {
@@ -61,7 +78,7 @@ int main()
 		int ret = 0;
 		for (int i = 0; i < N; ++i)
 		{
-			ret = max(ret, GetLongestSequence(i));
+			ret = max(ret, Lis(i));
 		}
 		cout << ret << endl;
 	}
