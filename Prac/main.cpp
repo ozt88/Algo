@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <vector>
 #include <queue>
@@ -20,68 +21,58 @@ using i64 = long long int;
 using ii = pair<int, int>;
 using ii64 = pair<i64, i64>;
 
-int N;
-int list[500];
-int cache[500];
+int list1[101];
+int list2[101];
+int cache[101][101];
+int N, M;
 
-// n^2 using DP
-int Lis(int index)
+// n부터 시작하는 부분 배열과 m부터 시작하는 부분 배열에서 
+// 얻을 수 있는 최대 연결된 부분 증가 수열의 길이
+// n과 m은 반드시 포함된다
+int JLIS(int n, int m)
 {
-	if (index == N)
-		return 0;
+	int& ret = cache[n][m];
+	if (ret != -1)
+		return ret;
 
-	if (cache[index] != -1)
-		return cache[index];
-
-	int& ret = cache[index];
-	ret = 1;
-	for (int i = index + 1; i < N; ++i)
+	ret = 2;
+	int min = max(list1[n], list2[m]);
+	for (int nextN = n + 1; nextN <= N; nextN++)
 	{
-		if(list[index] < list[i])
-			ret = max(ret, GetLongestSequence(i) + 1);
+		if (min < list1[nextN])
+			ret = max(ret, JLIS(nextN, m) + 1);
+	}
+
+	for (int nextM = m + 1; nextM <= M; nextM++)
+	{
+		if (min < list2[nextM])
+			ret = max(ret, JLIS(n, nextM) + 1);
 	}
 	return ret;
-}
-
-// n log n using lower_bound(binary search)
-int LisLowerBound(const vector<int>& list)
-{
-	if (list.empty())
-		return 0;
-
-	vector<int> minValuePerLength;
-	for (int num : list)
-	{
-		if (minValuePerLength.empty() || minValuePerLength.back() < num)
-			minValuePerLength.push_back(num);
-		else
-			*lower_bound(minValuePerLength.begin(), minValuePerLength.end(), num) = num;
-	}
-	return minValuePerLength.size();
 }
 
 int main()
 {
 	int C;
 	cin >> C;
-	for (int c = 0; c < C; ++c)
+	for (int i = 0; i < C; ++i)
 	{
-		memset(list, 0, sizeof(list));
+		memset(list1, 0, sizeof(list1));
+		memset(list2, 0, sizeof(list2));
 		memset(cache, -1, sizeof(cache));
 
-		cin >> N;
-		for (int i = 0; i < N; ++i)
-		{
-			cin >> list[i];
-		}
+		cin >> N >> M;
 
-		int ret = 0;
-		for (int i = 0; i < N; ++i)
-		{
-			ret = max(ret, Lis(i));
-		}
-		cout << ret << endl;
+		list1[0] = numeric_limits<int>::min();
+		list2[0] = numeric_limits<int>::min();
+
+		for (int n = 1; n <= N; ++n)
+			cin >> list1[n];
+
+		for (int m = 1; m <= M; ++m)
+			cin >> list2[m];
+
+		cout << JLIS(0, 0) - 2 << endl;
 	}
-
 	return 0;
 }
