@@ -44,7 +44,7 @@ int Lis(int index)
 }
 
 // n log n using lower_bound(binary search)
-int LisLowerBound(const vector<int> list)
+int LisLowerBound(const vector<int>& list)
 {
 	if (list.empty())
 		return 0;
