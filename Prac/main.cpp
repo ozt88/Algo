@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <vector>
 #include <queue>
@@ -21,43 +20,58 @@ using i64 = long long int;
 using ii = pair<int, int>;
 using ii64 = pair<i64, i64>;
 
-int getDamage(const string& P)
+void TripleSort(vector<int>& _list)
 {
-	int damageSum = 0;
-	int curDamage = 1;
-	for (auto c : P)
+	bool done = false;
+	while (!done)
 	{
-		if (c == 'C')
-			curDamage *= 2;
-		else if (c == 'S')
-			damageSum += curDamage;
-	}
-	return damageSum;
-}
-
-string solve(int D, string& P)
-{
-	if (getDamage(P) <= D)
-		return to_string(0);
-
-	int moveCount = 0;
-	size_t lastSPos, lastMovableCPos;
-	while (true) 
-	{
-		lastSPos = P.find_last_of('S');
-		lastMovableCPos = P.find_last_of('C', lastSPos);
-		if (lastMovableCPos == string::npos)
-			return "IMPOSSIBLE";
-
-		for (;lastMovableCPos < lastSPos; ++lastMovableCPos)
+		done = true;
+		for (int i = 0; i < _list.size() - 2; ++i)
 		{
-			moveCount++;
-			iter_swap(P.begin() + lastMovableCPos, P.begin() + lastMovableCPos + 1 );
-
-			if (getDamage(P) <= D)
-				return to_string(moveCount);
+			if (_list[i] > _list[i + 2])
+			{
+				done = false;
+				iter_swap(_list.begin() + i, _list.begin() + i + 2);
+			}
 		}
 	}
+}
+
+int Solve(vector<int>& _list)
+{
+	TripleSort(_list);
+	for (int i = 0; i < _list.size() - 1; ++i)
+	{
+		if (_list[i] > _list[i + 1])
+			return i;
+	}
+	return -1;
+}
+
+int FasterSolve(const vector<int>& _list)
+{
+	vector<int> evenList,oddList;
+	for (int i = 0; i < _list.size(); ++i)
+	{
+		if (i % 2)
+			oddList.push_back(_list[i]);
+		else
+			evenList.push_back(_list[i]);
+	}
+
+	sort(evenList.begin(), evenList.end());
+	sort(oddList.begin(), oddList.end());
+
+	for (int i = 0; i < _list.size() / 2; ++i)
+	{
+		if (evenList[i] > oddList[i])
+			return i * 2;
+		else if (i + 1 < evenList.size() && oddList[i] > evenList[i + 1])
+			return i * 2 + 1;
+
+	}
+
+	return -1;
 }
 
 int main()
@@ -66,10 +80,20 @@ int main()
 	cin >> T;
 	for (int i = 0; i < T; ++i)
 	{
-		int D;
-		string P;
-		cin >> D >> P;
-		cout << "Case #" << i + 1 << ": " << solve(D, P) << endl;
+		int N;
+		cin >> N;
+		vector<int> list(N);
+		for (auto& num : list)
+			cin >> num;
+
+		int errorIndex = FasterSolve(list);
+		string ret;
+		if (errorIndex == -1)
+			ret = "OK";
+		else
+			ret = to_string(errorIndex);
+
+		cout << "Case #" << i + 1 << ": " << ret << endl;
 	}
 	return 0;
 }
