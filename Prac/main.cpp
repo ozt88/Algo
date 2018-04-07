@@ -20,95 +20,66 @@ using i64 = long long int;
 using ii = pair<int, int>;
 using ii64 = pair<i64, i64>;
 
+int farm[1001][1001] = { 0, };
 
-bool Check(int x, int y, const vector<pair<int, int>>& candidate, const vector<vector<char>>& board)
+
+bool Check9Done(int _x, int _y)
 {
-	for (auto& checkDir : candidate)
+	for (int x = _x - 1; x <= _x + 1; ++x)
 	{
-		int checkX = x + checkDir.first;
-		int checkY = y + checkDir.second;
-
-		if(checkX >= board.size() || checkY >= board[checkX].size() || board[checkX][checkY] != '.')
-			return false;
-	}
-
-	return true;
-}
-
-void Mark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
-{
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '#';
-}
-
-void Unmark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
-{
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '.';
-}
-
-bool CheckWholeBoardComplete(const vector<vector<char>>& board, const int H, const int W)
-{
-	for(int h = 0; h < H; ++h)
-	{
-		for (int w = 0; w < W; ++w)
+		for (int y = _y - 1; y <= _y + 1; ++y)
 		{
-			if(board[w][h] == '.')
+			if (farm[x][y] == 0)
 				return false;
 		}
 	}
 	return true;
 }
 
-int Iter(int idx, vector<vector<char>>& board, const int H, const int W)
+bool WorkUntil9Done(int _x, int _y)
 {
-	if(CheckWholeBoardComplete(board, H, W))
-		return 1;
-
-	if (idx >= H * W)
-		return 0;
-
-	static const vector<vector<pair<int, int>>> candidates = { {{0, 0}, {0, 1}, {1, 0}}, {{0, 0}, {1, 0}, {1, 1}},  {{0, 0}, {0, 1}, {1, 1}}, {{0, 1}, {1, 0}, {1, 1}}, {}};
-	int x = idx % W, y = idx / W;
-	int result = 0;
-	for (auto& candidate : candidates)
+	int xDone, yDone;
+	int count = 0;
+	while (!Check9Done(_x, _y))
 	{
-		if (Check(x, y, candidate, board))
-		{
-			Mark(x, y, candidate, board);
-			if(board[x][y] == '#')
-				result += Iter(idx + 1, board, H, W);
-			Unmark(x, y, candidate, board);
-		}
-	}
+		cout << _x << ' ' << _y << endl << flush;
+		cin >> xDone >> yDone;
 
-	return result;
+		if (xDone == -1 || yDone == -1)
+			return false;
+
+		if (xDone == 0 && yDone == 0)
+			return false;
+
+		farm[xDone][yDone] = 1;
+	}
+	return true;
 }
 
-int Solve(vector<vector<char>>& board, const int H, const int W)
+bool Work(int _a)
 {
-	return Iter(0, board, H, W);
+	memset(farm, 0, sizeof(farm));
+	int sufficient = (int)(ceil(sqrt((double)_a / 9)));
+	for (int x = 0; x < sufficient; ++x)
+	{
+		for (int y = 0; y < sufficient; ++y)
+		{
+			if (!WorkUntil9Done(x * 3 + 2, y * 3 + 2))
+				return false;
+		}
+	}
+	return true;
 }
 
 int main()
-{
-	int C;
-	cin >> C;
-	for (int i = 0; i < C; ++i)
+{	
+	int T;
+	cin >> T;
+	for (int i = 0; i < T; ++i)
 	{
-		int H, W;
-		cin >> H >> W;
-		vector<vector<char>> board(W, vector<char>(H));
-		for (int h = 0; h < H; ++h)
-		{
-			for (int w = 0; w < W; ++w)
-			{
-				cin >> board[w][h];
-			}
-		}
-		int result = Solve(board, H, W);
-		cout <<  result << endl;
+		int a;
+		cin >> a;
+		Work(a);
 	}
-
 	return 0;
 }
