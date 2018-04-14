@@ -20,94 +20,96 @@ using i64 = long long int;
 using ii = pair<int, int>;
 using ii64 = pair<i64, i64>;
 
+vector<string> waffle;
+int R, C, H, V;
+int share;
 
-bool Check(int x, int y, const vector<pair<int, int>>& candidate, const vector<vector<char>>& board)
+bool Check(vector<int>& hCut, vector<int>& vCut, int newH, int newV, int newCount)
 {
-	for (auto& checkDir : candidate)
-	{
-		int checkX = x + checkDir.first;
-		int checkY = y + checkDir.second;
+	int lastH = 0;
+	int lastV = 0;
+	if (!hCut.empty())
+		lastH = hCut.back();
+	if (!vCut.empty())
+		lastV = vCut.back();
 
-		if(checkX >= board.size() || checkY >= board[checkX].size() || board[checkX][checkY] != '.')
-			return false;
+
+	for (int r = lastH; r < newH; ++r)
+	{
+		for (int c = 0; c < newV; ++c)
+		{
+
+		}
+	}
+
+	for (int r = 0; r < newH; ++r)
+	{
+		for (int c = lastV; c < newV; ++c)
+		{
+
+		}
 	}
 
 	return true;
 }
 
-void Mark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
-{
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '#';
-}
 
-void Unmark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
+bool CutIter(vector<int>& hCut, vector<int>& vCut, int hLeft, int vLeft)
 {
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '.';
-}
 
-bool CheckWholeBoardComplete(const vector<vector<char>>& board, const int H, const int W)
-{
-	for(int h = 0; h < H; ++h)
+	if (hLeft == 0 && vLeft == 0)
 	{
-		for (int w = 0; w < W; ++w)
-		{
-			if(board[w][h] == '.')
-				return false;
-		}
+		return Check(hCut, vCut, R + 1, C + 1);
 	}
-	return true;
+
+
 }
 
-int Iter(int idx, vector<vector<char>>& board, const int H, const int W)
+
+
+bool Solve()
 {
-	if(CheckWholeBoardComplete(board, H, W))
-		return 1;
-
-	if (idx >= H * W)
-		return 0;
-
-	static const vector<vector<pair<int, int>>> candidates = { {{0, 0}, {0, 1}, {1, 0}}, {{0, 0}, {1, 0}, {1, 1}},  {{0, 0}, {0, 1}, {1, 1}}, {{0, 1}, {1, 0}, {1, 1}}, {}};
-	int x = idx % W, y = idx / W;
-	int result = 0;
-	for (auto& candidate : candidates)
+	int chocoCount = 0;
+	for (auto column : waffle)
 	{
-		if (Check(x, y, candidate, board))
+		for (char c : column)
 		{
-			Mark(x, y, candidate, board);
-			if(board[x][y] == '#')
-				result += Iter(idx + 1, board, H, W);
-			Unmark(x, y, candidate, board);
+			if (c == '@')
+				chocoCount++;
 		}
 	}
 
-	return result;
-}
+	vector<int> hCut, vCut;
+	int h = H;
+	int v = V;
+	int divide = (h + 1) * (v + 1);
+	if (chocoCount % divide != 0)
+		return false;
 
-int Solve(vector<vector<char>>& board, const int H, const int W)
-{
-	return Iter(0, board, H, W);
+	share = chocoCount / divide;
+
+	return CutIter(hCut, vCut, h, v);
 }
 
 int main()
 {
-	int C;
-	cin >> C;
-	for (int i = 0; i < C; ++i)
+	int T;
+	cin >> T;
+	for (int i = 0; i < T; ++i)
 	{
-		int H, W;
-		cin >> H >> W;
-		vector<vector<char>> board(W, vector<char>(H));
-		for (int h = 0; h < H; ++h)
-		{
-			for (int w = 0; w < W; ++w)
-			{
-				cin >> board[w][h];
-			}
-		}
-		int result = Solve(board, H, W);
-		cout <<  result << endl;
+		cin >> R, C, H, V;
+		waffle.clear();
+		waffle.resize(R);
+
+		for(auto& column : waffle)
+			cin >> column;
+
+		bool ret = Solve();
+		if (ret)
+			cout << "POSSIBLE" << endl;
+		else
+			cout << "IMPOSSIBLE" << endl;
+
 	}
 
 	return 0;
