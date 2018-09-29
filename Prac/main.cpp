@@ -20,94 +20,40 @@ using i64 = long long int;
 using ii = pair<int, int>;
 using ii64 = pair<i64, i64>;
 
+i64 table[50][50] = { 0, };
 
-bool Check(int x, int y, const vector<pair<int, int>>& candidate, const vector<vector<char>>& board)
+i64 solve(int n, int m)
 {
-	for (auto& checkDir : candidate)
-	{
-		int checkX = x + checkDir.first;
-		int checkY = y + checkDir.second;
-
-		if(checkX >= board.size() || checkY >= board[checkX].size() || board[checkX][checkY] != '.')
-			return false;
-	}
-
-	return true;
-}
-
-void Mark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
-{
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '#';
-}
-
-void Unmark(int x, int y, const vector<pair<int, int>>& candidate, vector<vector<char>>& board)
-{
-	for (auto& checkDir : candidate)
-		board[x + checkDir.first][y + checkDir.second] = '.';
-}
-
-bool CheckWholeBoardComplete(const vector<vector<char>>& board, const int H, const int W)
-{
-	for(int h = 0; h < H; ++h)
-	{
-		for (int w = 0; w < W; ++w)
-		{
-			if(board[w][h] == '.')
-				return false;
-		}
-	}
-	return true;
-}
-
-int Iter(int idx, vector<vector<char>>& board, const int H, const int W)
-{
-	if(CheckWholeBoardComplete(board, H, W))
+	if (n == m)
 		return 1;
 
-	if (idx >= H * W)
-		return 0;
+	if (n == 1)
+		return m;
 
-	static const vector<vector<pair<int, int>>> candidates = { {{0, 0}, {0, 1}, {1, 0}}, {{0, 0}, {1, 0}, {1, 1}},  {{0, 0}, {0, 1}, {1, 1}}, {{0, 1}, {1, 0}, {1, 1}}, {}};
-	int x = idx % W, y = idx / W;
-	int result = 0;
-	for (auto& candidate : candidates)
+	auto& ret = table[n][m];
+	if (ret == -1)
 	{
-		if (Check(x, y, candidate, board))
+		ret = 0;
+		// 왼쪽 맨위에 있는 점이 연결되는 경우를 먼저 따져서 나누면
+		// n - 1의 더 작은 문제로 만들 수 있습니다.
+		for (int i = 1; i <= m - n + 1; ++i)
 		{
-			Mark(x, y, candidate, board);
-			if(board[x][y] == '#')
-				result += Iter(idx + 1, board, H, W);
-			Unmark(x, y, candidate, board);
+			ret += solve(n - 1, m - i);
 		}
 	}
-
-	return result;
-}
-
-int Solve(vector<vector<char>>& board, const int H, const int W)
-{
-	return Iter(0, board, H, W);
+	return ret;
 }
 
 int main()
 {
-	int C;
-	cin >> C;
-	for (int i = 0; i < C; ++i)
+	int T;
+	cin >> T;
+	int N, M;
+	for (int t = 0; t < T; ++t)
 	{
-		int H, W;
-		cin >> H >> W;
-		vector<vector<char>> board(W, vector<char>(H));
-		for (int h = 0; h < H; ++h)
-		{
-			for (int w = 0; w < W; ++w)
-			{
-				cin >> board[w][h];
-			}
-		}
-		int result = Solve(board, H, W);
-		cout <<  result << endl;
+		cin >> N >> M;
+		memset(table, -1, sizeof(table));
+		cout << solve(N, M) << '\n';
 	}
 
 	return 0;
