@@ -1,35 +1,35 @@
 # YYYY-Www-BOJ-XXXX
 
-## Problem
-- Source:
-- Name:
-- Link/ID:
+## 문제
+- 출처:
+- 이름:
+- 링크/번호:
 
-## Summary
-- Goal:
-- What made it tricky:
+## 요약
+- 목표:
+- 까다로웠던 점:
 
-## I/O Notes
-- Input:
-- Output:
-- Constraints:
+## 입출력 정리
+- 입력:
+- 출력:
+- 제약:
 
-## Discussion Log
-- Initial observations:
-- User-led direction:
-- Rejected ideas:
-- Chosen approach and why:
+## 논의 기록
+- 처음 관찰한 내용:
+- 사용자 주도 방향:
+- 버린 아이디어:
+- 최종 선택 방향과 이유:
 
-## Implementation Notes
-- Parsing decisions:
-- Core state / data structure:
-- Important edge cases:
+## 구현 메모
+- 파싱 결정:
+- 핵심 상태 / 자료구조:
+- 중요한 엣지 케이스:
 
-## Verification
-- Sample cases checked:
-- Additional cases checked:
-- Final result:
+## 검증
+- 확인한 예제:
+- 추가로 확인한 케이스:
+- 최종 결과:
 
-## Retrospective
-- What to reuse next time:
-- What to improve:
+## 회고
+- 다음에도 재사용할 점:
+- 개선할 점:

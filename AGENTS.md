@@ -27,6 +27,7 @@
    - Keep solving logic as TODO-level placeholders unless explicitly requested.
 3. `plan.md` draft:
    - Fill the reusable template in `plans/plan.md` for the specific problem.
+   - Write all plan documents in Korean.
 4. History update:
    - When a problem is meaningfully completed, summarize it into a history note under `plans/history/`.
 
@@ -45,6 +46,7 @@
 - `plans/plan.md` is the active working note for the current problem.
 - Completed problems should be archived under `plans/history/`.
 - Prefer filenames in the form `YYYY-Www-BOJ-<id>.md` when the problem has a BOJ id.
+- All plan and history contents must be written in Korean.
 - History entries should focus on:
   - problem summary
   - input/output notes

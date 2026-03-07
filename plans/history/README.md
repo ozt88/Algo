@@ -1,18 +1,19 @@
 # Plan History
 
-This directory stores completed or paused problem-solving notes.
+이 디렉터리는 완료했거나 중단된 문제 풀이 기록을 보관합니다.
 
-Rules:
-- Keep `plans/plan.md` for the active problem only.
-- When a problem session is complete enough to preserve, copy or move the final note here.
-- Prefer filenames like `YYYY-Www-BOJ-<id>.md`.
-- Keep the record plan-first: decisions, reasoning, edge cases, and outcomes matter more than final code.
+규칙:
+- `plans/plan.md`는 현재 진행 중인 문제에만 사용합니다.
+- 보관할 가치가 생긴 문제는 최종 노트를 이 디렉터리로 복사하거나 이동합니다.
+- 파일명은 가능하면 `YYYY-Www-BOJ-<id>.md` 형식을 사용합니다.
+- 기록은 코드보다 plan 중심으로 남깁니다. 의사결정, 근거, 엣지 케이스, 검증 결과를 우선합니다.
+- 모든 내용은 한국어로 작성합니다.
 
-Suggested contents:
-- Problem name and source
-- Summary of the task
-- Input and output notes
-- Key decisions and rejected ideas
-- Implementation notes
-- Test cases checked
-- Final status
+권장 내용:
+- 문제 이름과 출처
+- 문제 요약
+- 입력/출력 정리
+- 주요 결정과 버린 아이디어
+- 구현 메모
+- 확인한 테스트 케이스
+- 최종 상태
