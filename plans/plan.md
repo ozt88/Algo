@@ -1,85 +1,85 @@
-# Problem Plan - BOJ 30801
+﻿# BOJ 30801 가희와 클럽 오디션 2
 
-## 1) Problem Summary
-- Problem link/name: BOJ 30801 가희와 클럽 오디션 2
-- Objective (one sentence): 노트 문자열과 실제 입력 문자열이 주어질 때, 마지막 타이밍에 Space를 눌렀을 때 성공인지 판정한다.
-- Output requirement (one sentence): 최종 판정이 성공이면 `Yes`, 아니면 `No`를 출력한다.
+## 1) 문제 요약
+- 문제 링크/이름: BOJ 30801 가희와 클럽 오디션 2
+- 목표: 노트 문자열과 입력 문자열을 각각 방향 토큰 배열로 변환한 뒤, 두 배열이 완전히 같은지 판단한다.
+- 출력 요구사항: 완전히 같으면 `Yes`, 아니면 `No`를 출력한다.
 
-## 2) Constraints and I/O
-- Input format:
+## 2) 문제 해설
+- 노트는 여러 개의 방향 키로 이루어진 문자열이다.
+- 각 키는 `W`, `A`, `S`, `D`, `LU`, `LD`, `RU`, `RD` 중 하나다.
+- 뒤에 `!`가 붙으면 역방향 키이므로 실제 의미하는 방향을 반대로 바꿔 해석해야 한다.
+- 사용자의 입력도 문자 그대로 비교하는 것이 아니라 방향으로 변환해서 비교해야 한다.
+- 예를 들어 `W`와 `8`은 같은 방향(상), `D`와 `6`은 같은 방향(우)이다.
+- 최종적으로는 변환된 노트 방향 배열과 입력 방향 배열이 길이와 내용까지 모두 같아야 성공이다.
+
+## 3) 핵심 관찰
+- 문제에서 상태 전이를 길게 설명하지만, 최종 판정만 놓고 보면 두 방향 시퀀스의 완전 일치 여부를 확인하는 문제로 볼 수 있다.
+- 입력이 하나라도 더 많거나 적으면 실패다.
+- 중간에 한 번 전체를 맞췄더라도 이후 입력이 더 들어오면 최종 상태는 깨지므로 실패다.
+- 따라서 구현의 본질은:
+  - 노트 문자열을 정확히 토큰화하기
+  - 역방향 `!`를 반영해 실제 방향으로 바꾸기
+  - 입력 문자열을 방향 배열로 바꾸기
+  - 두 배열이 완전히 같은지 확인하기
+
+## 4) 입출력 정리
+- 입력
   - 첫 줄: 노트 문자열
-  - 둘째 줄: 사용자가 누른 키 문자열
-- Output format:
-  - `Yes` 또는 `No`
-- Constraints (level, input count, limits):
-  - 레벨 `6 <= lv <= 11`
-  - 입력 수 `1 <= len(keys) <= 20000`
-  - 시간 1초, 메모리 512MB
-- Notes from samples:
-  - 노트 토큰은 `W`, `A`, `S`, `D`, `LU`, `LD`, `RU`, `RD` 뒤에 선택적으로 `!`
-  - 입력 키는 단일 문자이며 방향으로 변환해서 비교
+  - 둘째 줄: 사용자의 입력 문자열
+- 출력
+  - 성공이면 `Yes`
+  - 실패면 `No`
+- 제한
+  - `6 <= lv <= 11`
+  - `1 <= len(keys) <= 20000`
+  - 시간 제한 1초, 메모리 제한 512MB
 
-## 3) Core Idea (User-Driven)
-- Candidate approach:
-  - 노트 문자열을 방향 시퀀스로 파싱
-  - 입력 문자열도 방향 시퀀스로 변환
-  - `matched = 앞에서부터 일치한 길이` 상태 하나만 유지하며 순서대로 시뮬레이션
-- Why this approach fits constraints:
-  - 노트 길이는 최대 11, 입력 길이는 최대 20000이라 선형 시뮬레이션이면 충분
-- Data structures needed:
+## 5) 구현 메모
+- 노트 문자열은 토큰 단위로 끊어서 방향 배열로 변환한다.
+- 입력 문자열은 각 문자를 방향으로 변환한다.
+- 현재 구현 구조
   - `note []int`
   - `keys []int`
-  - `matched int`
-- Complexity target:
-  - Time: `O(len(keys))`
-  - Space: `O(lv + len(keys))`
-- Open decisions for user:
-  - [ ] 상태 전이 구현을 단순 if로 갈지 함수화할지 결정
-  - [ ] 입력 문자열 전체를 배열로 바꿀지, 순회 중 즉시 처리할지 결정
+- 판정 방식
+  - `len(note) != len(keys)`이면 바로 `No`
+  - 길이가 같으면 각 위치의 방향이 모두 같은지 확인
+  - 하나라도 다르면 `No`, 끝까지 모두 같으면 `Yes`
 
-## 4) Implementation Checklist
-- [x] Parse input robustly.
-- [x] Parse note tokens including reverse `!`.
-- [x] Parse input key characters into directions.
-- [x] Define `matched` state skeleton.
-- [ ] Fill state transition logic (user-led).
-- [x] Format output exactly as required.
-- [ ] Run sample tests.
-- [ ] Add edge-case tests for reset timing.
-
-## 5) Test Cases
-### Basic Cases
-- Case 1:
-  - Input:
+## 6) 테스트 케이스
+### 기본 예제
+- 예제 1
+  - 입력:
     - `WLU!LDAS!D!RD!`
     - `W31AW47`
-  - Expected:
+  - 기대값:
     - `Yes`
-- Case 2:
-  - Input:
+- 예제 2
+  - 입력:
     - `DDDDDD`
     - `DDDDDDD`
-  - Expected:
+  - 기대값:
     - `No`
-
-### Edge Cases
-- Edge 1 (full match then one more key):
-  - Input:
-    - `DDDDDD`
-    - `DDDDDDD`
-  - Expected:
+- 예제 3
+  - 입력:
+    - `DD!DDDD!`
+    - `DDDDDDDDDDDD`
+  - 기대값:
     - `No`
-- Edge 2 (midway mismatch reset):
-  - Input:
+- 예제 4
+  - 입력:
     - `WLU!LDAS!D!RD!`
     - `W31A447W`
-  - Expected:
+  - 기대값:
     - `No`
 
-## 6) Progress Notes
-- Current status:
-  - 노트/입력 파싱과 판정 스캐폴드 완료, 상태 전이 핵심은 미구현
-- Next action:
-  - `judgeSkeleton`에서 `matched` 갱신 규칙을 정확히 채우기
-- Blockers/questions:
-  - 현재 없음
+### 추가 확인 포인트
+- 노트와 입력의 길이가 다르면 항상 실패하는지 확인
+- 같은 방향을 의미하는 서로 다른 키 표현(`W`와 `8`, `D`와 `6`)이 동일하게 처리되는지 확인
+- `!`가 붙은 노트가 정확히 반대 방향으로 변환되는지 확인
+
+## 7) 진행 상태
+- 현재 상태:
+  - 노트 파싱, 입력 파싱, 판정 로직 구현 완료
+- 다음 작업:
+  - 이 해석 기준으로 코드도 더 단순하게 정리할지 검토

@@ -132,30 +132,20 @@ func keyToDirection(ch byte) int {
 }
 
 func solve(input Input) string {
-	return judgeSkeleton(input.Note, input.Keys)
+	return judge(input.Note, input.Keys)
 }
 
-func judgeSkeleton(note, keys []int) string {
-	matched := 0
-	lv := len(note)
+func judge(note, keys []int) string {
+	if len(note) != len(keys) {
+		return "No"
+	}
 
-	for _, key := range keys {
-		_ = key
-		if matched == lv {
-			matched = 0
-			continue
+	for i := range note {
+		if note[i] != keys[i] {
+			return "No"
 		}
-
-		// TODO(user): complete state transition.
-		// If key matches note[matched], increment matched.
-		// Otherwise reset matched to 0.
-		matched = 0
 	}
-
-	if matched == lv {
-		return "Yes"
-	}
-	return "No"
+	return "Yes"
 }
 
 func main() {

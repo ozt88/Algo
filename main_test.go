@@ -56,3 +56,57 @@ func TestParseInput(t *testing.T) {
 		t.Fatalf("keys length = %d, want 12", len(input.Keys))
 	}
 }
+
+func TestSolve(t *testing.T) {
+	tests := []struct {
+		name string
+		in   string
+		want string
+	}{
+		{
+			name: "sample 1",
+			in: "WLU!LDAS!D!RD!\nW31AW47\n",
+			want: "Yes",
+		},
+		{
+			name: "sample 2",
+			in: "DDDDDD\nDDDDDDD\n",
+			want: "No",
+		},
+		{
+			name: "sample 3",
+			in: "DD!DDDD!\nDDDDDDDDDDDD\n",
+			want: "No",
+		},
+		{
+			name: "sample 4",
+			in: "WLU!LDAS!D!RD!\nW31A447W\n",
+			want: "No",
+		},
+		{
+			name: "extra key makes length mismatch",
+			in: "DDDDDD\nDDDDDD6\n",
+			want: "No",
+		},
+		{
+			name: "mixed key representation matches",
+			in: "WDRD\n863\n",
+			want: "Yes",
+		},
+		{
+			name: "same length but one direction differs",
+			in: "WDRD\n861\n",
+			want: "No",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			input := parseInput(strings.NewReader(tt.in))
+			got := solve(input)
+			if got != tt.want {
+				t.Fatalf("solve() = %q, want %q", got, tt.want)
+			}
+		})
+	}
+}

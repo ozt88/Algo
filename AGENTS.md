@@ -1,4 +1,4 @@
-# Algorithm Collaboration Protocol
+﻿# Algorithm Collaboration Protocol
 
 ## Purpose
 - Default goal is to support the user's own problem-solving process rather than provide complete direct solutions.
@@ -47,6 +47,7 @@
 - Completed problems should be archived under `plans/history/`.
 - Prefer filenames in the form `YYYY-Www-BOJ-<id>.md` when the problem has a BOJ id.
 - All plan and history contents must be written in Korean.
+- Korean Markdown documents in this repo should be saved as UTF-8 with BOM to avoid mojibake in Windows PowerShell 5.1.
 - History entries should focus on:
   - problem summary
   - input/output notes
