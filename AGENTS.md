@@ -6,12 +6,14 @@
   1. Explain the problem core.
   2. Implement input/output handling scaffold.
   3. Co-author `plans/plan.md` toward final solution.
+- Preserve weekly problem-solving history primarily as plan documents rather than code snapshots.
 
 ## Role Boundaries
 - Assistant role:
   - Clarify intent, constraints, and key algorithmic idea at a high level.
   - Provide executable I/O scaffold and implementation skeleton.
   - Maintain and update `plans/plan.md` with actionable next steps.
+  - Archive completed problem discussions into `plans/history/` in a plan-first format.
 - User role:
   - Own the final core solving logic and strategy decisions.
   - Drive tradeoff choices when multiple valid approaches exist.
@@ -25,6 +27,8 @@
    - Keep solving logic as TODO-level placeholders unless explicitly requested.
 3. `plan.md` draft:
    - Fill the reusable template in `plans/plan.md` for the specific problem.
+4. History update:
+   - When a problem is meaningfully completed, summarize it into a history note under `plans/history/`.
 
 ## Hint Depth Policy
 - Default hint depth is `core-idea only`.
@@ -36,3 +40,15 @@
 - Avoid presenting an initial solving strategy before the user asks for one.
 - Do not skip the fixed response order (`explanation -> I/O scaffold -> plan.md`).
 - Keep explanations concise, implementation-oriented, and aligned with the user's plan-first workflow.
+
+## Plan History Convention
+- `plans/plan.md` is the active working note for the current problem.
+- Completed problems should be archived under `plans/history/`.
+- Prefer filenames in the form `YYYY-Www-BOJ-<id>.md` when the problem has a BOJ id.
+- History entries should focus on:
+  - problem summary
+  - input/output notes
+  - failed or discarded ideas
+  - chosen direction and why
+  - implementation notes
+  - test and verdict summary
