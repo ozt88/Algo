@@ -1,67 +1,33 @@
-# Project State
-
-## Project Reference
-
-See: .planning/PROJECT.md (updated 2026-03-28)
-
-**Core value:** LLM과 협력하되 핵심 풀이는 직접 - 알고리즘 사고력을 기른다
-**Current focus:** Phase 1: 기초 탐색
+# STATE
 
 ## Current Position
 
-Phase: 1 of 7 (기초 탐색)
-Plan: 1 of 3 in current phase
-Status: In progress — 오늘 BOJ 28280 완료, 다음 문제 진행 예정
-Last activity: 2026-03-28 - BOJ 28280 귀납법 AC
+- **Phase:** 03-boj-25208
+- **Plan:** 01 (complete)
+- **Status:** Phase 3 complete — 제출 대기
 
-Progress: [█░░░░░░░░░] 10%
+## Progress
 
-오늘 풀이 목록 (2026-W13):
-- [x] BOJ 28280 귀납법 — BFS 전처리, AC
-- [ ] BOJ 31864
-- [ ] BOJ 25208
-- [ ] BOJ 25964
+- [x] Phase 1: BOJ 28280 귀납법 — AC
+- [ ] Phase 2: BOJ 31864 눈송이 탕후루 — In progress
+- [x] Phase 3: BOJ 25208 새벽의 탐정 게임 — 구현 완료 (제출 전)
+- [ ] Phase 4: BOJ 25964
+
+## Decisions
+
+| Date | Phase | Decision |
+|------|-------|----------|
+| 2026-03-28 | 03-01 | s = north_face×6 + bottom_face 인코딩 (사용자 설계) |
+| 2026-03-28 | 03-01 | 면 0 = 뚫린 면, 초기 s=12, rollTable BFS 자동 생성 |
+| 2026-03-28 | 03-01 | R칸 bottom==0이면 승리, 아니면 해당 이동 스킵 |
 
 ## Performance Metrics
 
-**Velocity:**
-- Total plans completed: 0 (formal phases not yet started)
-- Average duration: -
-- Total execution time: -
+| Phase | Plan | Duration | Tasks | Files |
+|-------|------|----------|-------|-------|
+| 03-boj-25208 | 01 | 15min | 3 | 3 |
 
-**By Phase:**
+## Session
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| - | - | - | - |
-
-**Recent Trend:**
-- 2026-W10: BOJ 33065 (Union-Find), BOJ 30801 (문자열 시뮬레이션) 완료
-- Trend: 초기 단계
-
-*Updated after each plan completion*
-
-## Accumulated Context
-
-### Decisions
-
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
-
-- 초기화: Go 단일 파일 구조 (main.go + main_test.go) 유지
-- 초기화: plan.md 우선 워크플로우 확립 (AGENTS.md 프로토콜)
-- 초기화: 한국어 Markdown, UTF-8 BOM 인코딩 고정
-
-### Pending Todos
-
-None yet.
-
-### Blockers/Concerns
-
-None yet.
-
-## Session Continuity
-
-Last session: 2026-03-28
-Stopped at: BOJ 28280 AC. 다음 문제 BOJ 31864 대기 중.
-Resume file: None
+- **Last session:** 2026-03-28T03:32:00Z
+- **Stopped at:** Completed 03-boj-25208 03-01-PLAN.md
