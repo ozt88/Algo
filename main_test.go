@@ -4,37 +4,58 @@ import "testing"
 
 func TestSolve(t *testing.T) {
 	tests := []struct {
-		name      string
-		fruits    [][2]int
-		endpoints [][2]int
-		want      int
+		name string
+		grid []string
+		dr   int
+		dc   int
+		rr   int
+		rc   int
+		want int
 	}{
 		{
-			name: "예제1",
-			fruits: [][2]int{
-				{-1, -1}, {-1, 0}, {-1, 1},
-				{1, 0}, {1, 1}, {1, 2},
-				{2, 2}, {2, 4}, {3, 3},
+			name: "예제1_4회",
+			grid: []string{
+				"#####",
+				"#D..#",
+				"#.#.#",
+				"#..R#",
+				"#####",
 			},
-			endpoints: [][2]int{{0, 3}, {1, 1}, {4, 0}, {4, 4}, {3, 6}},
-			want:      3,
+			dr: 1, dc: 1,
+			rr: 3, rc: 3,
+			want: 4,
 		},
 		{
-			name:      "단일과일단일끝점_일치",
-			fruits:    [][2]int{{1, 2}},
-			endpoints: [][2]int{{1, 2}},
-			want:      1,
+			name: "예제2_7회",
+			grid: []string{
+				"#####",
+				"#..##",
+				"#..R#",
+				"##.##",
+				"##D##",
+				"#####",
+			},
+			dr: 4, dc: 2,
+			rr: 2, rc: 3,
+			want: 7,
 		},
 		{
-			name:      "방향불일치",
-			fruits:    [][2]int{{1, 2}},
-			endpoints: [][2]int{{2, 1}},
-			want:      0,
+			name: "예제3_불가능",
+			grid: []string{
+				"######",
+				"#R..D#",
+				"#.##.#",
+				"######",
+			},
+			dr: 1, dc: 4,
+			rr: 1, rc: 1,
+			want: -1,
 		},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			got := solve(tc.fruits, tc.endpoints)
+			buildRollTable()
+			got := solve(tc.grid, tc.dr, tc.dc, tc.rr, tc.rc)
 			if got != tc.want {
 				t.Errorf("got %d, want %d", got, tc.want)
 			}
