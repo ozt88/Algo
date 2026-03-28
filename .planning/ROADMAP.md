@@ -2,158 +2,53 @@
 
 ## Overview
 
-매주 BOJ 문제 2-3개를 Go로 풀이하며 알고리즘 사고력을 단계적으로 쌓는 커리큘럼.
-기초 탐색부터 심화 그래프, 문자열, 수학까지 7개 Phase로 구성한다.
-각 Phase는 하나의 알고리즘 유형을 완전히 다루며, 완료 시점에 해당 유형의 핵심 패턴을
-독립적으로 적용할 수 있는 상태를 목표로 한다.
-
+매주 BOJ 문제를 Go로 풀이하는 알고리즘 스터디.
+각 Milestone = 1주차, 각 Phase = 문제 1개.
 LLM은 I/O 스캐폴드와 plan.md 초안을 제공하고, 핵심 알고리즘 설계는 직접 수행한다.
-모든 풀이는 plan.md -> history/ 아카이브 순서를 따른다.
 
-## Phases
+## Milestone 1: 2026-W13 (2026-03-28)
 
-**Phase numbering:**
-- Integer phases (1-7): 계획된 학습 단계
-- Decimal phases: 긴급 삽입 시 사용 (예: 2.1)
+- [x] **Phase 1: BOJ 28280** 귀납법 — BFS 전처리
+- [ ] **Phase 2: BOJ 31864** 눈송이 탕후루 만들기
+- [ ] **Phase 3: BOJ 25208**
+- [ ] **Phase 4: BOJ 25964**
 
-- [ ] **Phase 1: 기초 탐색** - BFS/DFS, 백트래킹, Union-Find 기초 패턴 마스터
-- [ ] **Phase 2: 동적 프로그래밍 기초** - 1D/2D DP, 점화식 설계, 메모이제이션 마스터
-- [ ] **Phase 3: 동적 프로그래밍 심화** - 트리 DP, 비트마스크 DP, 구간 DP 마스터
-- [ ] **Phase 4: 그래프 알고리즘** - 다익스트라, 플로이드-워셜, MST (크루스칼/프림) 마스터
-- [ ] **Phase 5: 문자열 알고리즘** - KMP, 트라이, 해싱 기반 패턴 매칭 마스터
-- [ ] **Phase 6: 수학/정수론** - 소수 판별, 조합론, 모듈러 연산, 이진 지수승 마스터
-- [ ] **Phase 7: 심화 자료구조** - 세그먼트 트리, 펜윅 트리, 스택 기반 알고리즘 마스터
+### Phase Details
 
-## Phase Details
+#### Phase 1: BOJ 28280 귀납법 ✓
+**Goal**: 1에서 k까지 ×2 또는 -1 연산 최소 횟수
+**Algorithm**: BFS 전처리 (4×10⁶ 범위)
+**Status**: AC
+**History**: `history/2026-W13-BOJ-28280.md`
 
-### Phase 1: 기초 탐색
-**Goal**: BFS/DFS, 백트래킹, Union-Find의 핵심 패턴을 Go로 독립적으로 작성할 수 있다
-**Depends on**: Nothing (워크플로우와 코드 품질 기준이 여기서 확립된다)
-**Requirements**: WF-01, WF-02, WF-03, WF-04, CUR-01, CUR-03, CODE-01, CODE-02, CODE-03, LOG-01, LOG-02
-**Success Criteria** (what must be TRUE):
-  1. BFS/DFS로 격자 혹은 그래프 연결요소 문제를 힌트 없이 풀 수 있다
-  2. 백트래킹으로 조건부 탐색 공간을 정의하고 가지치기를 설계할 수 있다
-  3. Union-Find (경로 압축 + 랭크 합병)를 직접 구현하고 연결성 판단에 쓸 수 있다
-  4. 풀이마다 plan.md를 작성하고 완료 후 history/에 아카이브한다
-  5. 모든 Go 코드가 golangci-lint를 통과하고 최소 1개 테스트 케이스를 포함한다
-**Plans**: TBD
+#### Phase 2: BOJ 31864 눈송이 탕후루 만들기
+**Goal**: (0,0)에서 끝점까지 선분 위 과일 최대 개수
+**Algorithm**: TODO
+**Status**: In progress
+**Plans**:
+- [ ] 02-01: 풀이 설계 및 구현
 
-Plans:
-- [ ] 01-01: BFS/DFS — 격자/그래프 연결요소 탐색
-- [ ] 01-02: 백트래킹 — 조건부 탐색 공간 정의 + 가지치기
-- [ ] 01-03: Union-Find — 경로 압축 + 랭크 합병 구현
+#### Phase 3: BOJ 25208
+**Goal**: TBD
+**Status**: Not started
+**Plans**:
+- [ ] 03-01: 풀이 설계 및 구현
 
-### Phase 2: 동적 프로그래밍 기초
-**Goal**: 1D/2D DP 점화식을 스스로 유도하고 bottom-up / top-down 두 방식으로 구현할 수 있다
-**Depends on**: Phase 1
-**Requirements**: CUR-02
-**Success Criteria** (what must be TRUE):
-  1. 문제를 보고 상태 정의와 점화식을 먼저 종이에 적은 뒤 구현할 수 있다
-  2. 1D DP (배낭, LIS, 동전) 유형을 힌트 없이 풀 수 있다
-  3. 2D DP (LCS, 편집거리, 격자 경로) 유형을 힌트 없이 풀 수 있다
-  4. Bottom-up과 top-down 중 적합한 방식을 선택하고 이유를 plan.md에 기록한다
-**Plans**: TBD
-
-Plans:
-- [ ] 02-01: 1D DP 기초 — 점화식 유도 (LIS, 동전, 계단)
-- [ ] 02-02: 배낭 문제 — 0/1 배낭, 무한 배낭 변형
-- [ ] 02-03: 2D DP — LCS, 편집거리, 격자 경로
-
-### Phase 3: 동적 프로그래밍 심화
-**Goal**: 트리 구조, 비트마스크 상태, 구간 위에서 DP 상태를 정의하고 올바른 점화식을 유도할 수 있다
-**Depends on**: Phase 2
-**Requirements**: (Phase 2와 함께 CUR-02, CUR-03을 계속 충족)
-**Success Criteria** (what must be TRUE):
-  1. 트리 DP에서 루트 선택 여부 혹은 서브트리 상태를 변수로 잡을 수 있다
-  2. 비트마스크로 방문 집합 상태를 인코딩하고 TSP류 문제를 풀 수 있다
-  3. 구간 DP (행렬 곱셈 순서, 괄호 삽입) 점화식을 올바르게 세울 수 있다
-  4. 이진 트리 매칭 (BOJ 30801 패턴) 같은 복합 재귀를 메모이제이션으로 최적화할 수 있다
-**Plans**: TBD
-
-Plans:
-- [ ] 03-01: 트리 DP — 서브트리 상태 정의, 루트 선택/비선택
-- [ ] 03-02: 비트마스크 DP — 방문 집합 인코딩, TSP류
-- [ ] 03-03: 구간 DP — 분할 정복 점화식, 복합 재귀 메모이제이션
-
-### Phase 4: 그래프 알고리즘
-**Goal**: 가중치 그래프에서 최단경로와 최소신장트리를 올바르게 선택하고 구현할 수 있다
-**Depends on**: Phase 1 (BFS 기초), Phase 2 (DP 기초)
-**Requirements**: (CUR-02, CUR-03 지속 충족)
-**Success Criteria** (what must be TRUE):
-  1. 다익스트라를 우선순위 큐로 구현하고 음수 간선 제약 조건을 설명할 수 있다
-  2. 플로이드-워셜로 모든 쌍 최단경로를 구하고 시간복잡도 O(V^3)를 이해한다
-  3. 크루스칼 (Union-Find 활용) 또는 프림으로 MST를 구하고 두 알고리즘의 차이를 설명할 수 있다
-  4. 주어진 문제에서 "최단경로 vs MST vs BFS" 중 올바른 접근을 선택할 수 있다
-**Plans**: TBD
-
-Plans:
-- [ ] 04-01: 다익스트라 — 우선순위 큐 기반 단일 출발 최단경로
-- [ ] 04-02: 플로이드-워셜 — 모든 쌍 최단경로
-- [ ] 04-03: MST — 크루스칼(Union-Find) / 프림 비교 구현
-
-### Phase 5: 문자열 알고리즘
-**Goal**: KMP 실패함수와 트라이 구조를 직접 구현하고 패턴 매칭 문제에 적용할 수 있다
-**Depends on**: Phase 1 (탐색 기초)
-**Requirements**: (CUR-02, CUR-03 지속 충족)
-**Success Criteria** (what must be TRUE):
-  1. KMP 실패함수(failure function)를 직접 구현하고 O(N+M) 매칭을 설명할 수 있다
-  2. 트라이(Trie) 노드 구조를 Go로 구현하고 문자열 집합 검색에 적용할 수 있다
-  3. 해싱 기반 Rabin-Karp로 다중 패턴 혹은 롤링 해시 문제를 풀 수 있다
-  4. 상태 시뮬레이션 기반 문자열 문제 (BOJ 30801 패턴)의 전이 규칙을 올바르게 모델링할 수 있다
-**Plans**: TBD
-
-Plans:
-- [ ] 05-01: KMP — 실패함수 구현, O(N+M) 패턴 매칭
-- [ ] 05-02: 트라이 — 노드 구조 구현, 문자열 집합 검색
-- [ ] 05-03: 해싱 — 롤링 해시, Rabin-Karp 다중 패턴
-
-### Phase 6: 수학/정수론
-**Goal**: 소수 판별, 조합론, 모듈러 연산을 알고리즘 문제 제약 내에서 정확하게 적용할 수 있다
-**Depends on**: Phase 2 (DP 기초, 조합 점화식)
-**Requirements**: (CUR-02, CUR-03 지속 충족)
-**Success Criteria** (what must be TRUE):
-  1. 에라토스테네스의 체로 범위 내 소수를 O(N log log N)에 열거할 수 있다
-  2. 이진 지수승(fast exponentiation)으로 a^b mod p를 O(log b)에 계산할 수 있다
-  3. 페르마 소정리를 활용한 모듈러 역원으로 nCr mod p를 계산할 수 있다
-  4. 유클리드 호제법으로 GCD/LCM을 구하고 확장 유클리드로 역원을 찾을 수 있다
-**Plans**: TBD
-
-Plans:
-- [ ] 06-01: 소수 — 에라토스테네스의 체, 소인수분해
-- [ ] 06-02: 모듈러 연산 — 이진 지수승, 페르마 소정리, 역원
-- [ ] 06-03: 조합론 — nCr mod p, GCD/LCM, 확장 유클리드
-
-### Phase 7: 심화 자료구조
-**Goal**: 구간 쿼리(합/최솟값/최댓값)를 효율적으로 처리하는 자료구조를 직접 구현할 수 있다
-**Depends on**: Phase 2 (DP/재귀 기초), Phase 4 (그래프 응용)
-**Requirements**: (CUR-02, CUR-03 지속 충족)
-**Success Criteria** (what must be TRUE):
-  1. 펜윅 트리(BIT)로 prefix sum 갱신과 쿼리를 O(log N)에 처리할 수 있다
-  2. 세그먼트 트리로 구간 최솟값/최댓값/합을 O(log N)에 처리할 수 있다
-  3. 단조 스택으로 Next Greater Element 류 문제를 O(N)에 풀 수 있다
-  4. 어떤 구간 쿼리 문제에서 BIT vs 세그먼트 트리를 선택할지 이유를 설명할 수 있다
-**Plans**: TBD
-
-Plans:
-- [ ] 07-01: 펜윅 트리(BIT) — prefix sum 갱신/쿼리 O(log N)
-- [ ] 07-02: 세그먼트 트리 — 구간 최솟값/최댓값/합
-- [ ] 07-03: 단조 스택 — Next Greater Element, 히스토그램 류
+#### Phase 4: BOJ 25964
+**Goal**: TBD
+**Status**: Not started
+**Plans**:
+- [ ] 04-01: 풀이 설계 및 구현
 
 ## Progress
 
-**Execution Order:**
-Phase 1 -> Phase 2 -> Phase 3 -> Phase 4 -> Phase 5 -> Phase 6 -> Phase 7
-
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1. 기초 탐색 | 0/3 | Not started | - |
-| 2. 동적 프로그래밍 기초 | 0/3 | Not started | - |
-| 3. 동적 프로그래밍 심화 | 0/3 | Not started | - |
-| 4. 그래프 알고리즘 | 0/3 | Not started | - |
-| 5. 문자열 알고리즘 | 0/3 | Not started | - |
-| 6. 수학/정수론 | 0/3 | Not started | - |
-| 7. 심화 자료구조 | 0/3 | Not started | - |
+| Milestone | Phase | Problem | Status |
+|-----------|-------|---------|--------|
+| W13 | 1 | BOJ 28280 귀납법 | ✓ AC |
+| W13 | 2 | BOJ 31864 눈송이 탕후루 | In progress |
+| W13 | 3 | BOJ 25208 | Not started |
+| W13 | 4 | BOJ 25964 | Not started |
 
 ---
-*Roadmap created: 2026-03-28*
-*Granularity: standard (7 phases, 3 plans each)*
+*Roadmap restructured: 2026-03-28 — Milestone = 주차, Phase = 문제*
+*다음 주차: `/gsd:new-milestone` 실행*
