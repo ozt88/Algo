@@ -8,28 +8,28 @@
 
 ### 문제풀이
 
-- [ ] **PROB-01**: BOJ 1117을 Go로 풀이하여 AC를 받는다
+- [x] **PROB-01**: BOJ 1117을 Go로 풀이하여 AC를 받는다
 - [ ] **PROB-02**: BOJ 30867을 Go로 풀이하여 AC를 받는다
 - [ ] **PROB-03**: BOJ 30398을 Go로 풀이하여 AC를 받는다
 - [ ] **PROB-04**: BOJ 18425를 Go로 풀이하여 AC를 받는다
 
 ### 워크플로우 (v1.0 계승, 전 Phase 공통)
 
-- [ ] **WF-01**: 새 문제를 받으면 문제 핵심 설명 → I/O 스캐폴드 → plan.md 순서로 진행한다
-- [ ] **WF-02**: plan.md는 매 문제마다 작성되며 풀이 방향, 실패 아이디어, 최종 선택을 담는다
-- [ ] **WF-03**: 문제가 의미있게 완료되면 history/에 YYYY-Www-BOJ-<id>.md 형식으로 아카이브한다
-- [ ] **WF-04**: 힌트 깊이는 기본 `core-idea only` — 사용자가 요청할 때만 심화 제공한다
+- [x] **WF-01**: 새 문제를 받으면 문제 핵심 설명 → I/O 스캐폴드 → plan.md 순서로 진행한다
+- [x] **WF-02**: plan.md는 매 문제마다 작성되며 풀이 방향, 실패 아이디어, 최종 선택을 담는다
+- [x] **WF-03**: 문제가 의미있게 완료되면 history/에 YYYY-Www-BOJ-<id>.md 형식으로 아카이브한다
+- [x] **WF-04**: 힌트 깊이는 기본 `core-idea only` — 사용자가 요청할 때만 심화 제공한다
 
 ### 코드 품질 (v1.0 계승, 전 Phase 공통)
 
-- [ ] **CODE-01**: 모든 Go 코드는 golangci-lint 통과 (140자 줄 제한, complexity 15 이하)
-- [ ] **CODE-02**: 각 문제는 main_test.go에 최소 1개 이상의 테스트 케이스를 포함한다
-- [ ] **CODE-03**: Go 표준 라이브러리만 사용한다 (외부 의존성 금지)
+- [x] **CODE-01**: 모든 Go 코드는 golangci-lint 통과 (140자 줄 제한, complexity 15 이하)
+- [x] **CODE-02**: 각 문제는 main_test.go에 최소 1개 이상의 테스트 케이스를 포함한다
+- [x] **CODE-03**: Go 표준 라이브러리만 사용한다 (외부 의존성 금지)
 
 ### 기록 (v1.0 계승, 전 Phase 공통)
 
-- [ ] **LOG-01**: 모든 plan/history 문서는 한국어, UTF-8 BOM으로 저장한다
-- [ ] **LOG-02**: history 문서는 풀이 요약, 실패 아이디어, 선택 이유, 테스트 결과를 포함한다
+- [x] **LOG-01**: 모든 plan/history 문서는 한국어, UTF-8 BOM으로 저장한다
+- [x] **LOG-02**: history 문서는 풀이 요약, 실패 아이디어, 선택 이유, 테스트 결과를 포함한다
 
 ## v2 Requirements
 
@@ -56,7 +56,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PROB-01 | Phase 5 | Pending |
+| PROB-01 | Phase 5 | Complete |
 | PROB-02 | Phase 6 | Pending |
 | PROB-03 | Phase 7 | Pending |
 | PROB-04 | Phase 8 | Pending |
