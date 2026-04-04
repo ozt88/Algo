@@ -10,7 +10,7 @@ var writer *bufio.Writer
 
 // Input holds all parsed values for BOJ 1117.
 type Input struct {
-	W, H, F, X1, Y1, X2, Y2, C int64
+	W, H, F, C, X1, Y1, X2, Y2 int64
 }
 
 func minInt64(a, b int64) int64 {
@@ -32,7 +32,7 @@ func parseInput(scanner *bufio.Scanner) Input {
 	scanner.Scan()
 	line := scanner.Text()
 	var in Input
-	fmt.Sscan(line, &in.W, &in.H, &in.F, &in.X1, &in.Y1, &in.X2, &in.Y2, &in.C) //nolint:errcheck,gosec
+	fmt.Sscan(line, &in.W, &in.H, &in.F, &in.C, &in.X1, &in.Y1, &in.X2, &in.Y2) //nolint:errcheck,gosec
 	return in
 }
 
