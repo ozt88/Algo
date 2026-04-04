@@ -1,31 +1,37 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
+milestone: v1.1
+milestone_name: 2026-W14
 status: planning
-stopped_at: Completed 03-boj-25208 03-01-PLAN.md
-last_updated: "2026-03-28T03:23:22.904Z"
+stopped_at: Milestone v1.1 started
+last_updated: "2026-04-04T00:00:00.000Z"
 progress:
-  total_phases: 4
-  completed_phases: 2
-  total_plans: 2
-  completed_plans: 2
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # STATE
 
 ## Current Position
 
-- **Phase:** 4
-- **Plan:** Not started
-- **Status:** Ready to plan
+- **Phase:** Not started (defining requirements)
+- **Plan:** —
+- **Status:** Defining requirements
+- **Last activity:** 2026-04-04 — Milestone v1.1 started
 
 ## Progress
 
-- [x] Phase 1: BOJ 28280 귀납법 — AC
-- [ ] Phase 2: BOJ 31864 눈송이 탕후루 — In progress
-- [x] Phase 3: BOJ 25208 새벽의 탐정 게임 — 구현 완료 (제출 전)
-- [ ] Phase 4: BOJ 25964
+(No phases yet — roadmap pending)
+
+## Accumulated Context
+
+### From v1.0 (W13)
+
+- discuss→plan→execute 3단계 워크플로우 확립
+- s = north_face×6 + bottom_face 인코딩 패턴 (BOJ 25208)
+- BOJ 25964 폐기
 
 ## Decisions
 
@@ -35,13 +41,7 @@ progress:
 | 2026-03-28 | 03-01 | 면 0 = 뚫린 면, 초기 s=12, rollTable BFS 자동 생성 |
 | 2026-03-28 | 03-01 | R칸 bottom==0이면 승리, 아니면 해당 이동 스킵 |
 
-## Performance Metrics
-
-| Phase | Plan | Duration | Tasks | Files |
-|-------|------|----------|-------|-------|
-| 03-boj-25208 | 01 | 15min | 3 | 3 |
-
 ## Session
 
-- **Last session:** 2026-03-28T03:32:00Z
-- **Stopped at:** Completed 03-boj-25208 03-01-PLAN.md
+- **Last session:** 2026-04-04
+- **Stopped at:** Milestone v1.1 started
