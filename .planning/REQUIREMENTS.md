@@ -1,4 +1,4 @@
-﻿# Requirements: 알고리즘 스터디 (BOJ x Go)
+# Requirements: 알고리즘 스터디 (BOJ x Go)
 
 **Defined:** 2026-03-28
 **Updated:** 2026-04-04 — Milestone v1.1
@@ -60,15 +60,15 @@
 | PROB-02 | Phase 6 | Pending |
 | PROB-03 | Phase 7 | Pending |
 | PROB-04 | Phase 8 | Pending |
-| WF-01~04 | All | Pending |
-| CODE-01~03 | All | Pending |
-| LOG-01~02 | All | Pending |
+| WF-01~04 | Phase 5, 6, 7, 8 (All) | Pending |
+| CODE-01~03 | Phase 5, 6, 7, 8 (All) | Pending |
+| LOG-01~02 | Phase 5, 6, 7, 8 (All) | Pending |
 
 **Coverage:**
 - v1.1 requirements: 4 문제풀이 + 9 공통
-- Mapped to phases: All
+- Mapped to phases: All (Phase 5-8)
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-28*
-*Last updated: 2026-04-04 — milestone v1.1 requirements*
+*Last updated: 2026-04-04 — roadmap defined (Phase 5-8)*
