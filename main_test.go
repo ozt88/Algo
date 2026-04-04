@@ -6,24 +6,45 @@ func TestSolve(t *testing.T) {
 	tests := []struct {
 		name string
 		in   Input
-		want string
+		want int64
 	}{
-		// BOJ 30867 예제 입출력
-		{name: "예제1_what", in: Input{L: 4, N: 1, S: "what"}, want: "hwat"},
-		{name: "예제2_hcpc", in: Input{L: 4, N: 200000, S: "hcpc"}, want: "hcpc"},
-		{name: "예제3_whwwhw", in: Input{L: 6, N: 2, S: "whwwhw"}, want: "hwhwww"},
-		// 엣지 케이스
-		{name: "h없는세그먼트", in: Input{L: 1, N: 1, S: "w"}, want: "w"},
-		{name: "w없는세그먼트", in: Input{L: 1, N: 1, S: "h"}, want: "h"},
-		{name: "장벽만", in: Input{L: 3, N: 1, S: "abc"}, want: "abc"},
-		{name: "N보다w가적음", in: Input{L: 3, N: 100, S: "wwh"}, want: "hww"},
-		{name: "여러세그먼트", in: Input{L: 7, N: 1, S: "wh_wh_w"}, want: "hw_hw_w"},
+		// BOJ 30398 예제 및 계산 검증
+		// N=4, d=2, P=1, point=(2,3): seg1 diffs=[1,2] S=3→3, seg2 diffs=[2,1] S=3→3, 3×3=9
+		{
+			name: "예제_N4d2P1",
+			in:   Input{N: 4, D: 2, P: 1, Points: [][]int{{2, 3}}},
+			want: 9,
+		},
+		// N=3, d=2, P=0: seg diffs=[2,2] S=4 → 4!/(2!2!)=6
+		{
+			name: "P0_N3d2",
+			in:   Input{N: 3, D: 2, P: 0, Points: nil},
+			want: 6,
+		},
+		// 불가능 케이스: N=2, d=2, P=1, point=(3,1) → seg1 diffs=[2,-1] → 0
+		{
+			name: "불가능_역방향",
+			in:   Input{N: 2, D: 2, P: 1, Points: [][]int{{3, 1}}},
+			want: 0,
+		},
+		// N=3, d=2, P=1, point=(1,3): seg1 diffs=[0,2] S=2→1, seg2 diffs=[2,0] S=2→1, 1×1=1
+		{
+			name: "경계점_N3d2P1",
+			in:   Input{N: 3, D: 2, P: 1, Points: [][]int{{1, 3}}},
+			want: 1,
+		},
+		// N=1, d=1, P=0: seg diffs=[0] S=0 → 0!/0!=1
+		{
+			name: "최소_N1d1P0",
+			in:   Input{N: 1, D: 1, P: 0, Points: nil},
+			want: 1,
+		},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			got := solve(tc.in)
 			if got != tc.want {
-				t.Errorf("got %q, want %q", got, tc.want)
+				t.Errorf("got %d, want %d", got, tc.want)
 			}
 		})
 	}
